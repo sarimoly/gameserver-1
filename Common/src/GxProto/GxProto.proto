@@ -1,0 +1,183 @@
+/**
+
+**/
+
+syntax = "proto2";
+
+//marco
+
+//性别.
+enum Sex {
+	GC_SEX_BOY = 0x00; //男.
+	GC_SEX_GIRL = 0x01; //女.
+}
+
+//可能的终端类型.
+enum TerminalType {
+	GC_TT_IPHONE = 0x00; //iphone.
+	GC_TT_IPAD = 0x01; //ipad.
+	GC_TT_ANDROID = 0x02; //android.
+	GC_TT_WP = 0x03; //windows platform.
+	GC_TT_PC = 0x04; //pc.
+}
+
+//支持的接入平台类型
+enum PlatformType {
+	GC_PT_RAW_GAS = 0x00; //原生的GAS鉴权.
+	GC_PT_PP_ASSISTANT = 0x01; //PP助手.
+	GC_PT_KUAI_YONG = 0x02; //快用.
+	GC_PT_91_ASSISTANT = 0x03; //91助手.
+	GC_PT_TONGBUTUI = 0x04; //同步推.
+	GC_PT_ITOOLS = 0x05; //itools.
+	GC_PT_06 = 0x06; //360.
+	GC_PT_07 = 0x07; //UC.
+	GC_PT_08 = 0x08; //当乐.
+	GC_PT_09 = 0x09; //baidu duoku.
+	GC_PT_0A = 0x0A; //anysdk.
+	GC_PT_0B = 0x0B; //xiaomi.
+	GC_PT_0C = 0x0C; //wandoujia.
+	GC_PT_0D = 0x0D; //lenovo.
+	GC_PT_0E = 0x0E; //huawei.
+	GC_PT_0F = 0x0F; //oppo.
+	GC_PT_10 = 0x10; //苹果app-store.
+	GC_PT_11 = 0x11; //yayawan.
+	GC_PT_12 = 0x12; //拇指玩.
+	GC_PT_13 = 0x13; //pps.
+	GC_PT_14 = 0x14; //机锋.
+	GC_PT_15 = 0x15; //duoku apple.
+	GC_PT_16 = 0x16; //爱贝.
+	GC_PT_17 = 0x17; //7xz
+	GC_PT_18 = 0x18; //冒泡客.
+	GC_PT_19 = 0x19; //mumayi
+	GC_PT_1A = 0x1A; //37wan
+	GC_PT_1B = 0x1B;
+	GC_PT_1C = 0x1C;
+	GC_PT_1D = 0x1D;
+	GC_PT_1E = 0x1E;
+	GC_PT_1F = 0x1F;
+	GC_PT_20 = 0x20;
+	GC_PT_21 = 0x21;
+	GC_PT_22 = 0x22;
+	GC_PT_23 = 0x23;
+	GC_PT_24 = 0x24;
+	GC_PT_25 = 0x25;
+	GC_PT_26 = 0x26;
+	GC_PT_27 = 0x27;
+	GC_PT_28 = 0x28;
+	GC_PT_29 = 0x29;
+	GC_PT_2A = 0x2A;
+	GC_PT_2B = 0x2B;
+	GC_PT_2C = 0x2C;
+	GC_PT_2D = 0x2D;
+	GC_PT_2E = 0x2E;
+	GC_PT_2F = 0x2F;
+}
+
+//运营版本.
+enum GameRunType {
+	GC_GR_TEST = 0x00; //测试版本
+	GC_GR_91 = 0x01; //91运营版本.
+	GC_GR_APPALE = 0x02; //applestore.
+	GC_GR_CW = 0x03; //深圳畅玩版本.
+	GC_GR_EXT1 = 0x04;
+	GC_GR_EXT2 = 0x05;
+	GC_GR_EXT3 = 0x06;
+	GC_GR_EXT4 = 0x07;
+	GC_GR_EXT5 = 0x08;
+	GC_GR_EXT6 = 0x09;
+}
+ 
+//common
+message PlayerRaw {
+	optional string username = 1; //姓名.
+	optional string pwd = 2; //密码.
+	optional string email = 3; //邮箱.
+}
+
+message GameSrvInfo{
+	optional uint32 index = 1; //区号.
+	optional string name = 2; //服务器名称.
+	optional uint32 status = 3; //服务器状态.
+	optional uint32 lastts = 4; //最近登录时间.
+}
+
+//登录游戏相关数据.
+message LoginRspInfo{
+	optional string token = 1; //鉴权凭证.
+	optional string host = 2; //登录网关服务器ip.
+	optional uint32 port = 3; //登录网关服务器端口.
+	repeated GameSrvInfo srvs = 4; //服务器列表.
+	optional string version1 = 5; //游戏版本号1
+	optional string version2 = 6; //游戏版本号2
+	optional string version3 = 7; //游戏版本号3
+	optional string download = 8; //资源下载地址.
+}
+
+message RoleCommonInfo{
+	optional uint32 id = 1; 
+	optional string name = 2; 
+	optional uint32 vocationId = 3; 
+	optional uint32 level = 4; 
+	optional uint64 expr = 5;
+	optional uint64 godValue = 6;
+	optional uint64 prestige = 7;
+	optional uint64 gold = 8;
+	optional uint64 crystal = 9;
+}
+
+// 请求附带信息
+// 掉线重连后可以设置token继续操作，token保存一个小时
+message RequestInfo{
+	optional string token = 1; //鉴权凭证.
+}
+
+
+//login
+//登陆帐号请求.
+message LoginServerReq{
+	optional TerminalType tt = 1; //终端类型.
+	optional PlatformType pt = 2; //鉴权类型, 参见Gmacros.proto.
+	optional GameRunType gr = 3; //运营版本.
+	optional PlayerRaw raw = 4; //官方帐号使用.
+}
+
+//登陆帐号响应
+message LoginServerRsp{
+	optional LoginRspInfo info = 1;
+}
+
+//gate
+message getRoleListReq {
+	optional RequestInfo info = 1; // 请求附带信息.
+	optional uint32 serverId = 2;
+}
+
+message getRoleListRsp{
+	repeated RoleCommonInfo roles = 1;
+}
+
+message SelectRoleReq {
+	optional RequestInfo info = 1; // 请求附带信息.
+	optional uint32 roleId = 2;
+}
+
+message SelectRoleRsp{
+	optional RoleCommonInfo role = 1;
+}
+
+message CreateRoleReq {
+	optional RequestInfo info = 1; // 请求附带信息.
+	optional string name = 2;
+	optional uint32 VocationId = 3;
+}
+
+message CreateRoleRsp{
+	optional RoleCommonInfo role = 1;
+}
+
+//server and gate
+
+message ServerConnectGateReq{
+	optional uint32 id = 1;
+	repeated uint32 cmds = 2;
+}

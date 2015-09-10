@@ -1,0 +1,23 @@
+{
+	"server" : {
+		"id" : 1,
+		"host1" : "127.0.0.1",
+		"port1" : 13000,
+		"host2" : "127.0.0.1",
+		"port2" : 13001
+	},
+	"db" : {
+		"host" : "localhost",
+		"port" : 3306,
+		"user" : "root",
+		"pwd" : "123123",
+		"datadb" : "test2",
+		"dictdb" : "test3",
+		"charset" : "utf8"
+	},
+	"redis" : {
+		"host" : "localhost",
+		"port" : 6379,
+		"db" : 2
+	}
+}
